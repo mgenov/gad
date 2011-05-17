@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="gad" default="compile" basedir=".">
+
+  <property environment="env"/>
+  <property file="build.properties"/>
+
+  <path id="classpath">    
+    <pathelement location="${core-classes}"/>
+    <pathelement location="${test-classes}"/>
+
+    <pathelement location="${lib}"/>
+    <fileset dir="${lib}" includes="gwt-dev*.jar"/>
+    <fileset dir="${lib}" includes="**/*.jar"/>
+
+    <pathelement location="${gwt.dir}/gwt-user.jar"/>
+    <!-- next line is platform-specific -->
+    <pathelement location="${gwt.dir}/gwt-dev-linux.jar"/>
+    <pathelement location="${gwt.dir}/gwt-servlet.jar"/>
+  </path>
+
+  <target name="prepare" description="creates output directories">
+    <mkdir dir="${core-classes}"/>
+    <mkdir dir="${test-classes}"/>
+  </target>
+
+  <target name="clean" description="deletes all generated files">
+    <delete dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="prepare, compile.production, compile.tests"
+          description="compiles Java source files to bytecode">
+  </target>
+
+
+  <target name="compile.production"
+          description="compiles Java source files to bytecode">
+    <javac srcdir="src" destdir="${core-classes}"
+           classpathref="classpath" debug="true">
+    </javac>
+  </target>
+
+  <target name="compile.tests"
+          description="compiles Java test files to bytecode">
+    <javac srcdir="test" destdir="${test-classes}" classpathref="classpath" debug="true">
+    </javac>
+  </target>
+
+
+  <target name="jar" depends="clean,compile"
+          description="Assembles a distributable jar">
+    <taskdef name="jarjar" classname="com.tonicsystems.jarjar.JarJarTask"
+             classpath="${lib}/jarjar-1.0.jar"/>
+
+    <jarjar jarfile="${build}/jartmp.jar">
+      
+      <!--gad classes-->
+      <fileset dir="${core-classes}">
+        <exclude name="META-INF/**"/>
+      </fileset>
+
+      <!--dependencies-->
+      <zipfileset src="${lib}/google-collect-1.0-rc2.jar">
+        <exclude name="META-INF/*"/>
+        <exclude name="package-info.class"/>
+      </zipfileset>
+
+      <!--repackage into google-collect namespace-->
+      <rule pattern="com.google.common.**" result="com.evo.gad.gcommons.@1"/>      
+      <!--<rule pattern="com.google.common.**" result="com.evo.gad.googlecollections.@1"/>-->
+    </jarjar>
+
+    <!-- horrendous workaround needed coz jarjar does not put in directory entries -->
+    <unzip src="${build}/jartmp.jar" dest="${build}/jartmp/"/>
+
+    <copy todir="${build}/jartmp/">
+      <fileset dir="${src}">            
+      </fileset>
+    </copy>
+
+    <!-- rejar with regular jar to generated jar entries -->
+    <jar jarfile="${build}/gad-${version}.jar" index="true">
+      <fileset dir="${build}/jartmp">
+        <include name="**/*"/>
+        <exclude name="com/google/**"/>  
+      </fileset>                    
+    </jar>
+
+  </target>
+
+
+  <target name="test" depends="compile" description="runs unit tests">
+    <taskdef name="testng" classname="org.testng.TestNGAntTask">
+      <classpath>
+        <fileset dir="lib">
+          <include name="testng*.jar"/>
+        </fileset>
+      </classpath>
+    </taskdef>
+
+    <!-- run them with testng -->
+    <testng haltonfailure="true" verbose="2" suitename="warp-persist unit tests using Guice 2">
+      <classpath>
+        <path refid="classpath"/>
+      </classpath>
+
+      <classfileset dir="${test-classes}" includes="**/*Test.class"/>
+    </testng>
+  </target>
+
+
+</project>
