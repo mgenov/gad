@@ -11,6 +11,6 @@ import com.evo.gad.shared.Action;
  * 
  * @author mgenov@gmail.com (Miroslav Genov)
  */
-interface ActionHandlerRepository {
+public interface ActionHandlerRepository {
   ActionHandler getActionHandler(Class<? extends Action> aClass);
 }

@@ -6,18 +6,17 @@ import com.evo.gad.shared.Response;
 import com.google.inject.Inject;
 
 /**
- *
- * 
  * @author mgenov@gmail.com (Miroslav Genov)
  * @since 1.0
  */
-class DefaultActionDispatcher implements ActionDispatcher {
+public class DefaultActionDispatcher implements ActionDispatcher {
 
   protected static final String HANDLER_NOT_BOUND_MESSAGE = "A handler for action [%s] has not been bound.";
   private final ActionHandlerRepository handlerRepository;
 
   /**
    * Constructs new DefaultActionDispatcher by providing the repository
+   *
    * @param handlerRepository the handler repository
    */
   @Inject
