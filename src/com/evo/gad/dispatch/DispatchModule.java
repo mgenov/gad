@@ -18,6 +18,22 @@ import java.util.List;
  * you can bind {@link com.evo.gad.shared.Action} classes to there handlers.
  * <p/>
  *
+ * Except explicit module binding, ActionHandlers could be bound using {@link com.evo.gad.shared.ActionHandler} annotation.
+ *
+ * <pre>
+ *  {@literal @}com.evo.gad.shared.ActionHandler(DummyActionHandler.class)
+ *  static class AnnotatedAction implements Action<AnnotatedResponse> {
+ *      .....
+ *  }
+ *
+ *  static class DummyActionHandler implements ActionHandler<AnnotatedAction,AnnotatedResponse> {
+ *    public AnnotatedResponse handle(AnnotatedAction action) {
+ *      return new AnnotatedResponse();
+ *    }
+ *  }
+ *
+ * </pre>
+ *
  * @author mgenov@gmail.com (Miroslav Genov)
  */
 public class DispatchModule extends AbstractModule {
