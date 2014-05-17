@@ -1,8 +1,8 @@
-package com.evo.gad.dispatch;
+package com.clouway.gad.dispatch;
 
-import com.evo.gad.shared.Action;
-import com.evo.gad.shared.ActionHandlerNotBoundException;
-import com.evo.gad.shared.Response;
+import com.clouway.gad.shared.Action;
+import com.clouway.gad.shared.ActionHandlerNotBoundException;
+import com.clouway.gad.shared.Response;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
@@ -39,7 +39,7 @@ public class DefaultActionDispatcher implements ActionDispatcher {
   public <T extends Response> T dispatch(Action<T> action) {
 
 
-    com.evo.gad.shared.ActionHandler actionHandler = action.getClass().getAnnotation(com.evo.gad.shared.ActionHandler.class);
+    com.clouway.gad.shared.ActionHandler actionHandler = action.getClass().getAnnotation(com.clouway.gad.shared.ActionHandler.class);
 
     ActionHandler handler = null;
 

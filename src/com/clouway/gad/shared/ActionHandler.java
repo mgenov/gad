@@ -1,4 +1,4 @@
-package com.evo.gad.shared;
+package com.clouway.gad.shared;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,11 +6,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation on {@link com.evo.gad.shared.Action} classes specifying the domain
+ * Annotation on {@link com.clouway.gad.shared.Action} classes specifying the domain
  * (server-side) object type.
  *
  * @author Miroslav Genov (mgenov@gmail.com)
- * @see com.evo.gad.shared.ActionHandler
+ * @see com.clouway.gad.shared.ActionHandler
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

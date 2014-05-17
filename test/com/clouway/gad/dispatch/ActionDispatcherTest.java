@@ -1,8 +1,8 @@
-package com.evo.gad.dispatch;
+package com.clouway.gad.dispatch;
 
-import com.evo.gad.shared.Action;
-import com.evo.gad.shared.ActionHandlerNotBoundException;
-import com.evo.gad.shared.Response;
+import com.clouway.gad.shared.Action;
+import com.clouway.gad.shared.ActionHandlerNotBoundException;
+import com.clouway.gad.shared.Response;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;

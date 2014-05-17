@@ -1,8 +1,8 @@
-package com.evo.gad.dispatch;
+package com.clouway.gad.dispatch;
 
-import com.evo.gad.shared.Action;
-import com.evo.gad.shared.Response;
-import com.evo.gad.shared.ActionHandlerNotBoundException;
+import com.clouway.gad.shared.Action;
+import com.clouway.gad.shared.Response;
+import com.clouway.gad.shared.ActionHandlerNotBoundException;
 
 /**
  * ActionDispatcher represents a Dispatcher class whose responsibility is to dispatch
@@ -16,7 +16,7 @@ public interface ActionDispatcher {
   /**
    * Dispatches the provided action to a proper handler that is responsible for handling of that action.
    * <p/> To may dispatch the incomming action a proper handler needs to be bound
-   * to the {@link com.evo.gad.dispatch.ActionHandlerRepository} to may the dispatch method dispatch the
+   * to the {@link com.clouway.gad.dispatch.ActionHandlerRepository} to may the dispatch method dispatch the
    * incomming request to it.
    *    
    * @param action the action to be handled

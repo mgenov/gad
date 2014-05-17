@@ -1,8 +1,8 @@
-package com.evo.gad.dispatch;
+package com.clouway.gad.dispatch;
 
-import com.evo.gad.shared.Action;
-import com.evo.gad.shared.ActionHandlerNotBoundException;
-import com.evo.gad.shared.Response;
+import com.clouway.gad.shared.Action;
+import com.clouway.gad.shared.ActionHandlerNotBoundException;
+import com.clouway.gad.shared.Response;
 import com.google.inject.Guice;
 import org.testng.annotations.Test;
 
@@ -15,7 +15,7 @@ import static org.testng.Assert.fail;
 @Test(suiteName = "dispatch")
 public class AnnotationBasedDispatchingTest {
 
-  @com.evo.gad.shared.ActionHandler(DummyActionHandler.class)
+  @com.clouway.gad.shared.ActionHandler(DummyActionHandler.class)
   static class AnnotatedAction implements Action<AnnotatedResponse> {
     public String value;
 
@@ -42,7 +42,7 @@ public class AnnotationBasedDispatchingTest {
   }
 
 
-  @com.evo.gad.shared.ActionHandler(DummyClass.class)
+  @com.clouway.gad.shared.ActionHandler(DummyClass.class)
   static class WrongAction implements Action<AnnotatedResponse> {
 
   }

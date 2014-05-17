@@ -65,8 +65,7 @@
       </zipfileset>
 
       <!--repackage into google-collect namespace-->
-      <rule pattern="com.google.common.**" result="com.evo.gad.gcommons.@1"/>      
-      <!--<rule pattern="com.google.common.**" result="com.evo.gad.googlecollections.@1"/>-->
+      <rule pattern="com.google.common.**" result="com.clouway.gad.gcommons.@1"/>
     </jarjar>
 
     <!-- horrendous workaround needed coz jarjar does not put in directory entries -->

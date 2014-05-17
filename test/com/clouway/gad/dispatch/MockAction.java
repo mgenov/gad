@@ -1,6 +1,6 @@
-package com.evo.gad.dispatch;
+package com.clouway.gad.dispatch;
 
-import com.evo.gad.shared.Action;
+import com.clouway.gad.shared.Action;
 
 /**
  * @author Miroslav Genov (mgenov@gmail.com)

@@ -1,4 +1,4 @@
-package com.evo.gad.shared;
+package com.clouway.gad.shared;
 
 
 /**

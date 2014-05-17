@@ -1,7 +1,7 @@
-package com.evo.gad.dispatch;
+package com.clouway.gad.dispatch;
 
-import com.evo.gad.shared.Action;
-import com.evo.gad.shared.Response;
+import com.clouway.gad.shared.Action;
+import com.clouway.gad.shared.Response;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -45,7 +45,7 @@ class LazyActionHandlerRepository implements ActionHandlerRepository {
 
 
   /**
-   * Gets {@link com.evo.gad.dispatch.ActionHandler} from the repository by providing the type of the
+   * Gets {@link com.clouway.gad.dispatch.ActionHandler} from the repository by providing the type of the
    * action class.
    * <p/>
    * <p/>

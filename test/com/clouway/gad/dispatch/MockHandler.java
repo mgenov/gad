@@ -1,4 +1,4 @@
-package com.evo.gad.dispatch;
+package com.clouway.gad.dispatch;
 
 /**
  * @author Miroslav Genov (mgenov@gmail.com)

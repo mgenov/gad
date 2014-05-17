@@ -1,7 +1,7 @@
-package com.evo.gad.dispatch;
+package com.clouway.gad.dispatch;
 
-import com.evo.gad.shared.Action;
-import com.evo.gad.shared.Response;
+import com.clouway.gad.shared.Action;
+import com.clouway.gad.shared.Response;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.inject.AbstractModule;
@@ -14,14 +14,14 @@ import java.lang.annotation.Annotation;
 import java.util.List;
 
 /**
- * Configures {@link com.evo.gad.dispatch.ActionDispatcher} to may dispatch {@link com.evo.gad.dispatch.ActionHandler} classes so
- * you can bind {@link com.evo.gad.shared.Action} classes to there handlers.
+ * Configures {@link com.clouway.gad.dispatch.ActionDispatcher} to may dispatch {@link com.clouway.gad.dispatch.ActionHandler} classes so
+ * you can bind {@link com.clouway.gad.shared.Action} classes to there handlers.
  * <p/>
  *
- * Except explicit module binding, ActionHandlers could be bound using {@link com.evo.gad.shared.ActionHandler} annotation.
+ * Except explicit module binding, ActionHandlers could be bound using {@link com.clouway.gad.shared.ActionHandler} annotation.
  *
  * <pre>
- *  {@literal @}com.evo.gad.shared.ActionHandler(DummyActionHandler.class)
+ *  {@literal @}com.clouway.gad.shared.ActionHandler(DummyActionHandler.class)
  *  static class AnnotatedAction implements Action<AnnotatedResponse> {
  *      .....
  *  }

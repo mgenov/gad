@@ -1,7 +1,7 @@
-package com.evo.gad.dispatch;
+package com.clouway.gad.dispatch;
 
-import com.evo.gad.shared.Action;
-import com.evo.gad.shared.Response;
+import com.clouway.gad.shared.Action;
+import com.clouway.gad.shared.Response;
 
 /**
  * ActionHandler is an handler class which is handling incomming actions.

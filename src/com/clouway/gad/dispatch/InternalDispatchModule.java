@@ -1,4 +1,4 @@
-package com.evo.gad.dispatch;
+package com.clouway.gad.dispatch;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;

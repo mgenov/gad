@@ -1,6 +1,6 @@
-package com.evo.gad.dispatch;
+package com.clouway.gad.dispatch;
 
-import com.evo.gad.shared.Action;
+import com.clouway.gad.shared.Action;
 
 /**
  * ActionHandlerRepository is a repository of all action classes that are bound to a single injector.
