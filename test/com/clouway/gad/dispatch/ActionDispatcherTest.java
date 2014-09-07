@@ -6,10 +6,12 @@ import com.clouway.gad.shared.Response;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
-import static org.easymock.EasyMock.createMock;
-import static org.testng.Assert.*;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
+import static org.easymock.EasyMock.createMock;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 
 /**
@@ -18,18 +20,88 @@ import org.testng.annotations.Test;
 @Test(suiteName = "dispatch")
 public class ActionDispatcherTest {
 
+  class FirstModule extends DispatchModule {
+    @Override
+    protected void configureHandlers() {
+      // make sure that first handler is bound as singleton
+      dispatch(FirstModuleAction.class).through(FirstModuleActionHandler.class).in(Singleton.class);
+    }
+  }
+
+  class SecondModule extends DispatchModule {
+
+    @Override
+    protected void configureHandlers() {
+      // make sure that second handler is bound as singleton
+      dispatch(SecondModuleAction.class).through(SecondModuleActionHandler.class).in(Singleton.class);
+    }
+
+  }
+
+  static class NoScopedActionHandler implements ActionHandler<MockAction, MockResponse> {
+
+    public MockResponse handle(MockAction action) {
+      return null;
+    }
+
+  }
+
+  static class FirstModuleAction implements Action<FirstModuleActionResponse> {
+  }
+
+  static class FirstModuleActionResponse implements Response {
+  }
+
+  static class FirstModuleActionHandler implements ActionHandler<FirstModuleAction, FirstModuleActionResponse> {
+    public FirstModuleAction action;
+    public FirstModuleActionResponse response;
+
+    public FirstModuleAction getAction() {
+      return action;
+    }
+
+    public FirstModuleActionResponse handle(FirstModuleAction action) {
+      this.action = action;
+      return response;
+    }
+  }
+
+
+  static class SecondModuleAction implements Action<SecondModuleActionResponse> {
+  }
+
+  static class SecondModuleActionResponse implements Response {
+  }
+
+
+  static class SecondModuleActionHandler implements ActionHandler<SecondModuleAction, SecondModuleActionResponse> {
+    public SecondModuleAction action;
+    public SecondModuleActionResponse response;
+
+    public SecondModuleActionResponse handle(SecondModuleAction action) {
+      this.action = action;
+      return response;
+    }
+  }
+
+  class UnMappedMockAction implements Action {
+
+  }
+
+
   private Injector injector;
 
   private ActionHandlerRepository repository;
 
   @BeforeTest
   public void pre() {
-    injector =  Guice.createInjector(new DispatchModule() {
-      @Override protected void configureHandlers() {
-        dispatch(MockAction.class).through(MockHandler.class).in(Singleton.class);        
+    injector = Guice.createInjector(new DispatchModule() {
+      @Override
+      protected void configureHandlers() {
+        dispatch(MockAction.class).through(MockHandler.class).in(Singleton.class);
       }
     });
-    
+
   }
 
   @Test
@@ -40,17 +112,17 @@ public class ActionDispatcherTest {
         dispatch(MockAction.class).through(NoScopedActionHandler.class).in(Singleton.class);
       }
     });
-    
+
     NoScopedActionHandler instance1 = (NoScopedActionHandler) injector.getInstance(ActionHandlerRepository.class).getActionHandler(MockAction.class);
     NoScopedActionHandler instance2 = (NoScopedActionHandler) injector.getInstance(ActionHandlerRepository.class).getActionHandler(MockAction.class);
 
-    assert  instance1 == instance2 : "different instances where returned in singleton scope ?";
+    assert instance1 == instance2 : "different instances where returned in singleton scope ?";
   }
 
 
   @Test
   public void testItShouldDispatchActionToTheActionHandler() {
-    
+
     // inject action dispatcher
     ActionDispatcher dispatcher = injector.getInstance(ActionDispatcher.class);
 
@@ -91,8 +163,7 @@ public class ActionDispatcherTest {
     try {
       dispatcher.dispatch(new UnMappedMockAction());
       fail("exception must be thrown");
-    }
-    catch (ActionHandlerNotBoundException e) {
+    } catch (ActionHandlerNotBoundException e) {
       assertTrue(true);
     }
   }
@@ -118,66 +189,5 @@ public class ActionDispatcherTest {
     assert secondHandler.action == secondAction : "second action has not been dispatched";
   }
 
-  class FirstModule extends DispatchModule {
-    @Override
-    protected void configureHandlers() {
-      // make sure that first handler is bound as singleton
-      dispatch(FirstModuleAction.class).through(FirstModuleActionHandler.class).in(Singleton.class);
-    }
-  }
 
-  class SecondModule extends DispatchModule {
-
-    @Override
-    protected void configureHandlers() {
-      // make sure that second handler is bound as singleton
-      dispatch(SecondModuleAction.class).through(SecondModuleActionHandler.class).in(Singleton.class);
-    }
-
-  }
-
-  static class NoScopedActionHandler implements ActionHandler<MockAction, MockResponse> {
-    
-    public MockResponse handle(MockAction action) {
-      return null;
-    }
-
-  }
-
-  static class FirstModuleAction implements Action<FirstModuleActionResponse> { }
-  static class FirstModuleActionResponse implements Response { }
-
-  static class FirstModuleActionHandler implements ActionHandler<FirstModuleAction, FirstModuleActionResponse> {
-    public FirstModuleAction action;
-    public FirstModuleActionResponse response;
-
-    public FirstModuleAction getAction() {
-      return action;
-    }
-
-    public FirstModuleActionResponse handle(FirstModuleAction action) {
-      this.action = action;
-      return response;
-    }
-  }
-
-
-
-  static class SecondModuleAction implements Action<SecondModuleActionResponse> {  }
-  static class SecondModuleActionResponse implements Response  {}
-
-
-  static class SecondModuleActionHandler implements ActionHandler<SecondModuleAction, SecondModuleActionResponse> {
-    public SecondModuleAction action;
-    public SecondModuleActionResponse response;
-
-    public SecondModuleActionResponse handle(SecondModuleAction action) {
-      this.action = action;
-      return response;
-    }
-  }
-
-  class UnMappedMockAction implements Action {
-
-  }
 }
